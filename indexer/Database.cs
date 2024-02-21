@@ -223,27 +223,8 @@ namespace Indexer
 
 
 
-                var command = _connection.CreateCommand();
-                command.CommandText =
-                  @"INSERT INTO word(id, name,frequency) VALUES(@id,@name,@frequency)";
 
-
-
-
-                var paramName = command.CreateParameter();
-                paramName.ParameterName = "name";
-                command.Parameters.Add(paramName);
-
-                var paramId = command.CreateParameter();
-                paramId.ParameterName = "id";
-                command.Parameters.Add(paramId);
-
-                var paramFrequency = command.CreateParameter();
-                paramFrequency.ParameterName = "frequency";
-                command.Parameters.Add(paramFrequency);
-
-
-
+ 
 
 
                 var wordCountCommit = _connection.CreateCommand();
@@ -252,39 +233,23 @@ namespace Indexer
 
 
                 // Insert all entries in the res
-                var commandV2 = _connection.CreateCommand();
+                var command = _connection.CreateCommand();
 
 
                 foreach (var p in wordWithFrequrencies)
                 {
                     if (p.Index > wordCount)
                     {
-                        commandV2.CommandText = $"INSERT INTO word(id, name, frequency) VALUES({p.Index}, '{p.Word}', {p.Frequrency})";
+                        command.CommandText = $"INSERT INTO word(id, name, frequency) VALUES({p.Index}, '{p.Word}', {p.Frequrency})";
                     }
                     else if(p.Frequrency > p.FrequrencyOld)
                     {
-                        commandV2.CommandText = $"UPDATE word SET frequency = {p.Frequrency} WHERE id = {p.Index}";
+                        command.CommandText = $"UPDATE word SET frequency = {p.Frequrency} WHERE id = {p.Index}";
                         p.FrequrencyOld = p.Frequrency;
                     }
 
-                    commandV2.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
                 }
-
-
-
-                //foreach (var p in wordWithFrequrencies)
-                //{
-
-                //    paramName.Value = p.Word;
-                //    paramId.Value = p.Index;
-                //    paramFrequency.Value = p.Frequrency;
-                //    Console.WriteLine("WordId: " + p.Index + " word: " + p.Word + "     wordWithFreq: " + wordWithFrequrencies.Count);
-                //    command.ExecuteNonQuery();
-                //}
-
-               // Console.WriteLine("SOVS" + wordCount);
-
-
                 transaction.Commit();
             }
         }

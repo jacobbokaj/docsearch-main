@@ -174,7 +174,7 @@ namespace Indexer
                 }
             }
             mdatabase.InsertAllWordsWithFrequrencies(wordsWithFrequrencyList);
-               mdatabase.InsertAllOcc(newDoc.mId, GetWordWithFreduncyIdFromWords(wordsInFile));
+         //      mdatabase.InsertAllOcc(newDoc.mId, GetWordWithFreduncyIdFromWords(wordsInFile));
         }
 
 
