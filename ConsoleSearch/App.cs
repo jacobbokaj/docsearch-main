@@ -12,7 +12,7 @@ namespace ConsoleSearch
         public void Run()
         {
             SearchLogic mSearchLogic = new SearchLogic(new Database());
-            
+            CommandOptions commandOptions = new CommandOptions();
 
             Console.WriteLine("Console Search");
             
@@ -20,7 +20,13 @@ namespace ConsoleSearch
             {
                 Console.WriteLine("enter search terms - q for quit");
                 string input = Console.ReadLine();
+                commandOptions.Run(input);
+
+
+
                 if (input.Equals("q")) break;
+
+
 
                 var query = input.Split(" ", StringSplitOptions.RemoveEmptyEntries);
                
