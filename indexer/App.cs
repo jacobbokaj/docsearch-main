@@ -46,7 +46,7 @@ namespace Indexer
             foreach (var p in all)
             {
 
-                Console.WriteLine("<" + p.Index + ", " + p.Word + "> " + p.Frequrency);
+                Console.WriteLine(p.ToString());
                 //Console.WriteLine("<" + p.Key + ", " + p.Value + ">");
                 count--;
 

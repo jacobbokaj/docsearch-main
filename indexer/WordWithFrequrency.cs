@@ -35,5 +35,9 @@ namespace indexer
             this.word = word;
             this.frequrency = frequrency;
         }
+        public override string ToString()
+        {
+            return "<" + Index + ", " + Word + "> " + Frequrency;
+        }
     }
 }
