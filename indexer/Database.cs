@@ -153,6 +153,50 @@ namespace Indexer
 
         }
 
+        public List<WordWithFrequrency> GetWordWithFrequrenciesInOrder()
+        {
+            var selectCmd = _connection.CreateCommand();
+            selectCmd.CommandText = "SELECT * FROM word ORDER BY frequency DESC";
+
+            List<WordWithFrequrency> wordWithFrequrencies = new List<WordWithFrequrency>();
+            using (var reader = selectCmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    while (reader.Read())
+                    {
+                        wordWithFrequrencies.Add(new WordWithFrequrency(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2)));
+                    }
+                    return wordWithFrequrencies;
+                }
+            }
+
+            return wordWithFrequrencies;
+        }
+
+
+        public Dictionary<string, int> GetAllWordsInOrder()
+        {
+            Dictionary<string, int> res = new Dictionary<string, int>();
+
+            var selectCmd = _connection.CreateCommand();
+            selectCmd.CommandText = "SELECT word.name, COUNT(Occ.wordId) AS word_count\r\nFROM word\r\nJOIN Occ ON word.id = Occ.wordId\r\nGROUP BY word.name\r\nORDER BY word_count DESC";
+
+            using (var reader = selectCmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var id = reader.GetInt32(0);
+                    var w = reader.GetString(1);
+                    Console.WriteLine(id);
+                    res.Add(w, id);
+                }
+            }
+            return res;
+        }
+
+
+
         public Dictionary<string, int> GetAllWords()
         {
             Dictionary<string, int> res = new Dictionary<string, int>();

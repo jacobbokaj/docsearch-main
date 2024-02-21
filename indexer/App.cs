@@ -25,33 +25,34 @@ namespace Indexer
             Console.WriteLine("DONE! used " + used.TotalMilliseconds + "  time");
 
             // var all = db.GetAllWords();
-             var all = db.GetAllWordsByFrequency();
+            var all = db.GetAllWordsInOrder();
           
             Console.WriteLine($"Indexed {db.GetDocumentCounts()} documents");
             Console.WriteLine($"Number of different words: {all.Count}");
-            int count = 20;
+            int count = 10;
             Console.WriteLine($"The first {count} is:");
 
 
-         
 
 
-            //foreach (var p in all) {
-            //    Console.WriteLine("<" + p.Key + ", " + p.Value + ">");
-            //    count--;
-                
-            //    if (count == 0) break;
-            //}
 
             foreach (var p in all)
             {
-
-                Console.WriteLine(p.ToString());
-                //Console.WriteLine("<" + p.Key + ", " + p.Value + ">");
+                Console.WriteLine("<" + p.Key + ", " + p.Value + ">");
                 count--;
 
                 if (count == 0) break;
             }
+
+            //foreach (var p in all)
+            //{
+
+            //    Console.WriteLine(p.ToString());
+            //    //Console.WriteLine("<" + p.Key + ", " + p.Value + ">");
+            //    count--;
+
+            //    if (count == 0) break;
+            //}
         }
     }
 }

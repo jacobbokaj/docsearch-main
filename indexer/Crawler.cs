@@ -128,8 +128,6 @@ namespace Indexer
             }
         }
 
-
-
         private void IndexFilesInWithListLooper(FileInfo file, List<WordWithFrequrency> wordWithFrequrencies)
         {
             documentCounter++;
