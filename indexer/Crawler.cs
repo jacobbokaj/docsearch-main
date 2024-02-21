@@ -55,20 +55,14 @@ namespace Indexer
             return res;
         }
 
-        private ISet<int> GetWordWithFreduncyIdFromWords(ISet<string> src)
+        private ISet<int> GetWordWithFreduncyIdFromWords(List<WordWithFrequrency> wordsInFile)
         {
             ISet<int> res = new HashSet<int>();
 
-            for (int i = 0; i < src.Count; i++)
+            for (int i = 0; i < wordsInFile.Count; i++)
             {
-                res.Add(wordsWithFrequrencyList[i].Index);
+                res.Add(wordsInFile[i].Index);
             }
-
-
-            //foreach (var p in src)
-            //{
-            //    res.Add(wordsWithFrequrencyList.[p]);
-            //}
             return res;
         }
 
@@ -125,17 +119,12 @@ namespace Indexer
                 documentCounter = 0;
                 foreach (var file in dir.EnumerateFiles())
                 {
-                    //      Console.WriteLine("Running to file: " + dir.EnumerateFiles()  + "   wordsWIthFrequrencyList: " + wordsWithFrequrencyList.Count);
                     if (extensions.Contains(file.Extension))
                     {
 
                         IndexFilesInWithListLooper(file, wordsWithFrequrencyList);
-                      //  mdatabase.InsertAllOcc(documentCounter, GetWordWithFreduncyIdFromWords(wordsWithFrequrencyList));
-                    //    break;
                     }
                 }
-                //mdatabase.InsertAllWordsWithFrequrencies(wordsWithFrequrencyList);
-                // Her skal du få den til at kunne tilføje alle dokumenterne til sidst, fordi at "words" kan blive opdateret undervejs, som gør de først bliver "insert" til sidst.
             }
         }
 
@@ -168,13 +157,14 @@ namespace Indexer
                 }
                 else
                 {
+                    newWords.Add(target);
                     target.FrequrencyOld = target.Frequrency;
                     target.Frequrency += 1;
 
                 }
             }
             mdatabase.InsertAllWordsWithFrequrencies(wordsWithFrequrencyList);
-          //  mdatabase.InsertAllOcc(newDoc.mId, GetWordWithFreduncyIdFromWords(wordsInFile));
+            mdatabase.InsertAllOcc(newDoc.mId, GetWordWithFreduncyIdFromWords(newWords));
         }
     }
 }
