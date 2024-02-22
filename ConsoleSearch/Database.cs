@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Shared;
 using Shared.Model;
 using Microsoft.Data.Sqlite;
+using System.Linq;
 
 namespace ConsoleSearch
 {
@@ -77,7 +78,7 @@ namespace ConsoleSearch
 
 
 
-       
+
 
         private Dictionary<string, int> GetAllWords()
         {
@@ -171,20 +172,76 @@ namespace ConsoleSearch
             return result;
         }
 
-        public List<int> GetWordIds(string[] query, out List<string> outIgnored)
+        public List<int> GetWordIds(string[] query, out List<string> outIgnored, bool caseSensitiveFlag)
         {
-            if (mWords == null)
-                mWords = GetAllWords();
+
+            mWords = GetAllWords();
+
+
             var res = new List<int>();
             var ignored = new List<string>();
 
-            foreach (var aWord in query)
+
+
+            foreach (var item in mWords)
             {
-                if (mWords.ContainsKey(aWord))
-                    res.Add(mWords[aWord]);
+                bool wordAdd = false;
+                for (int i = 0; i < query.Length; i++)
+                {
+                    if (caseSensitiveFlag)
+                    {
+                        wordAdd = mWords.ContainsKey(query[i]);
+                    }
+                    else
+                    {
+                        wordAdd = mWords.ContainsKey(query[i].ToLower());
+                        if (wordAdd == false)
+                        {
+
+                            wordAdd = mWords.ContainsKey(query[i].ToUpper());
+                        }
+                    }
+                }
+                if (wordAdd)
+                {
+                    res.Add(item.Value);
+                }
                 else
-                    ignored.Add(aWord);
+                {
+                    ignored.Add(item.Key);
+                }
             }
+
+
+
+            //foreach (var aWord in query)
+            //{
+            //    bool wordAdd;
+            //    if (caseSensitiveFlag)
+            //    {
+            //        wordAdd = mWords.ContainsKey(aWord);
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("sovs false");
+            //        wordAdd = mWords.ContainsKey(aWord.ToLower());
+            //        if (wordAdd == false)
+            //        {
+                        
+            //            wordAdd = mWords.ContainsKey(aWord.ToUpper());
+            //        }
+            //    }
+
+            //    if (wordAdd)
+            //    {
+            //        res.Add(mWords[aWord]);
+            //    }
+            //    else
+            //    {
+            //        ignored.Add(aWord);
+            //    }
+            //}
+
             outIgnored = ignored;
             return res;
         }

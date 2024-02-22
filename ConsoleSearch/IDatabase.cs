@@ -5,7 +5,7 @@ namespace ConsoleSearch
 {
     public interface IDatabase
     {
-        List<int> GetWordIds(string[] query, out List<string> outIgnored);
+        List<int> GetWordIds(string[] query, out List<string> outIgnored,bool caseSensitive);
         List<BEDocument> GetDocDetails(List<int> docIds);
         List<KeyValuePair<int, int>> GetDocuments(List<int> wordIds);
         List<int> getMissing(int docId, List<int> wordIds);

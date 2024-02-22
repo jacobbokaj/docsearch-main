@@ -13,15 +13,25 @@ namespace ConsoleSearch
         {
             switch (input)
             {
-                case "/casesensitive=off":
-                    Console.WriteLine("casesensitive is off");
+                case "/cs=off":
+                    Console.WriteLine("casesensitive is now 'off'",ConsoleColor.Green);
                     CasesensitiveFlag = false;
                     break;
-                case "/casesensitive=on":
-                    Console.WriteLine("casesensitive=on");
+                case "/cs=on":
+                    Console.WriteLine("casesensitive is now 'on'",ConsoleColor.Green);
                     CasesensitiveFlag = true;
                     break;
+                default:
+                    if (input.Contains('/'))
+                    {
+                        Console.WriteLine("command: " + input + " doesn't exist",ConsoleColor.Red);
+                    }
+                    break;
             }
+        }
+        public void Commands()
+        {
+            Console.WriteLine("Command options: for casesensitive write '/cs=on' can be 'on' or 'off'");
         }
     }
 }
