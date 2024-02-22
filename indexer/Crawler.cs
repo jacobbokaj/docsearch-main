@@ -145,7 +145,9 @@ namespace Indexer
             ISet<string> wordsInFile = ExtractWordsInFile(file);
             foreach (var aWord in wordsInFile)
             {
-                WordWithFrequrency target = wordWithFrequrencies.FirstOrDefault(x => x.Word.Equals(aWord, StringComparison.OrdinalIgnoreCase));
+               // WordWithFrequrency target = wordWithFrequrencies.FirstOrDefault(x => x.Word.Equals(aWord, StringComparison.OrdinalIgnoreCase));
+                WordWithFrequrency target = wordWithFrequrencies.FirstOrDefault(x => x.Word == aWord);
+
 
                 if (target == default(WordWithFrequrency))
                 {

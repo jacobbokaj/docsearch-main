@@ -8,12 +8,18 @@ namespace ConsoleSearch
 {
     public class CommandOptions
     {
+        public bool CasesensitiveFlag { get; private set; }
         public void Run(string input)
         {
             switch (input)
             {
-                case "sovs":
-                    Console.WriteLine("Sovs :D");
+                case "/casesensitive=off":
+                    Console.WriteLine("casesensitive is off");
+                    CasesensitiveFlag = false;
+                    break;
+                case "/casesensitive=on":
+                    Console.WriteLine("casesensitive=on");
+                    CasesensitiveFlag = true;
                     break;
             }
         }
